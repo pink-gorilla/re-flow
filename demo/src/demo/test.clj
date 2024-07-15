@@ -1,11 +1,7 @@
 (ns demo.test
-  (:require 
-    [missionary.core :as m]
-    [taoensso.timbre :refer [info error]]
-   )
-  
-  )
-
+  (:require
+   [missionary.core :as m]
+   [taoensso.timbre :refer [info error]]))
 
 (defn publish!
   [push! flow]
@@ -22,7 +18,7 @@
 (def task (publish! nil flow))
 
 (def dispose! (task  #(prn ::success %)
-                      #(prn ::crash %)))
+                     #(prn ::crash %)))
 
 
 task

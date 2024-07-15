@@ -8,4 +8,6 @@
  :clj-services {:name "demo"
                 :permission nil
                 :symbols [demo.service/a-seed
-                          demo.service/another-seed]}}
+                          demo.service/another-seed
+                          demo.service/quotes
+                          ]}}

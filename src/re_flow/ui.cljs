@@ -45,12 +45,12 @@
 
 
 (defn show-data [s v]
+  (let [render-fn (get-render-fn s)]
   (fn [s v]
-    (log "show-data symbol: " s " val: " v)
-    (let [render-fn (get-render-fn s)]
-      (if render-fn
-        [render-fn v]
-        [:p "unknown render-fn: " (str s)]))))
+    ;(log "show-data symbol: " s " val: " v)
+    (if render-fn
+      [render-fn v]
+      [:p "unknown render-fn: " (str s)]))))
 
 
 

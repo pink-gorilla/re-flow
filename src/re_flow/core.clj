@@ -11,7 +11,11 @@
  (defn publish!
    [push! flow]
    (let [rf (fn [r v]
-              (info "pushing value: " v)
+              (try 
+                 (info "pushing value: " v)  
+                (catch Exception ex
+                  nil))
+              
              (push! v)
               r)]
      (m/reduce rf nil flow)))
@@ -25,19 +29,22 @@
  (defn send-push! [{:as ev-msg :keys [id ?data ring-req ?reply-fn uid send-fn]}
                    msg-type response]
    (try
-     (info "send-push!: " ev-msg)
+     ; :?reply-fn nil
+     ; :ch-recv .. core.async channel
+     ; :client-id "5f5236dd-a7f9-4372-a3d5-5a4ef255678b"
+     ; :connected-uids
+     ; :uid "7dd3a962-cb67-4ea6-b887-06280a2e372b"   ... this corresponds to the connected uids.
+     ; :send-fn this will send data to the browser.
+     ;(info "send-push!: " ev-msg)
      (if (and msg-type response)
        (cond
          ?reply-fn (?reply-fn [msg-type response])
          uid (send-fn uid [msg-type response])
-         :else (error "Cannot send ws-response: neither ?reply-fn nor uid was set!"))
-       (error "Can not send ws-response - msg-type and response have to be set, msg-type:" msg-type "response: " response))
+         :else (error "send-push issue: neither ?reply-fn nor uid was set!"))
+       (error "send-push issue: msg-type and response have to be set, msg-type:" msg-type "response: " response))
      (catch Exception ex
        (error "send-push exception! ")))
-
    nil)
-
-
 
  (defn start-clj-flow! [{:keys [clj-service permission-service] :as this}]
    (defmethod -event-msg-handler :re-flow/start

@@ -26,10 +26,17 @@
    [:div.bg-green-500.m-5.p-5
     [:button.bg-blue-500 {:on-click #(a-flow-demo)} "a-flow"]]
    
-   [:div.bg-blue-500 "flow-ui"
+   [:div.bg-blue-500 "flow-ui (a seed)"
      [flow-ui {:clj 'demo.service/a-seed
                :args []
                :render 'demo.ui/a-flow-ui}]]
+   
+   [:div.bg-blue-500 "flow-ui (quotes)"
+    [flow-ui {:clj 'demo.service/quotes
+              :args []
+              :render 'demo.ui/quotes-ui}]]
+
+   
 
    ])
 
