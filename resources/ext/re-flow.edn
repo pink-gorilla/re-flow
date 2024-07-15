@@ -2,5 +2,6 @@
  ; build
  :lazy false
  :cljs-namespace [re-flow.core]
- :cljs-ns-bindings {'re-flow.core {'re-flow re-flow.core/re-flow} 
+ :cljs-ns-bindings {'re-flow.core {'re-flow re-flow.core/re-flow
+                                   'flow-ui re-flow.core/flow-ui} 
                     }}

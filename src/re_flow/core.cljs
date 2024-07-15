@@ -3,8 +3,11 @@
    [taoensso.timbre :refer [info error]]
    [missionary.core :as m]
    [re-frame.core :as rf]
+   [reagent.core :as r]
    [modular.ws.core :refer [send!]]
-   [modular.ws.msg-handler :refer [-event-msg-handler]]))
+   [modular.ws.msg-handler :refer [-event-msg-handler]]
+   [re-flow.ui :refer [show-data]]
+   ))
 
 (defonce subscriptions (atom {}))
 
@@ -48,4 +51,24 @@
        ))))
 
 
-
+(defn flow-ui [{:keys [clj
+                       args
+                       render]}]
+  (let [a (r/atom nil)
+        flow (apply re-flow clj args)
+        task (m/reduce (fn [_ v]
+                         (println "processing value: " v)
+                         (reset! a v))
+                       nil
+                       flow)
+        _ (println "a-flow-demo starting..")
+        dispose! (task
+                  #(println "success: " %)
+                  #(println "crash: " %))]
+    (fn [{:keys [clj
+                 args
+                 render]}]
+      [show-data render @a]  
+      )
+    
+    ))
