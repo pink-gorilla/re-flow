@@ -1,8 +1,8 @@
 {:name "re-flow-demo"
  ; build
  :lazy false
- :cljs-namespace [demo.page]
- :cljs-ns-bindings {'demo.page {'page demo.page/page}}
+ ;:cljs-namespace [demo.page]
+ ;:cljs-ns-bindings {'demo.page {'page demo.page/page}}
  ;runtime
  :cljs-routes {"" demo.page/page}
  :clj-services {:name "demo"

@@ -6,6 +6,7 @@
    [re-flow.core :refer [re-flow flow-ui]]))
 
 (defn a-flow-demo []
+  ; test that flows can be reduced over.
    (let [flow (re-flow 'demo.service/a-seed)
          task (m/reduce (fn [_ v]
                           (println "processing value: " v))

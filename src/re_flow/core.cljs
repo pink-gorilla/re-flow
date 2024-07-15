@@ -29,7 +29,7 @@
          ! (get @subscriptions topic)]
         ;(info  "re-flow/data: topic: " topic " data: " data)  
      (if !
-       (do (info "re-flowing topic:" topic data)
+       (do (debug "re-flowing topic:" topic data)
            (! data))
        (error "not reflowing. no ! for topic: " topic)))
    db))
