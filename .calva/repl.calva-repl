@@ -1,0 +1,86 @@
+; This is the Calva REPL Window.
+; It's just a file, really, with some special treatment from Calva.
+; Use it as a REPL input prompt if you like. (When the REPL is connected.)
+; TIPS: The keyboard shortcut `ctrl+alt+o r` shows and focuses this window
+; Please see https://calva.io/repl-window/ for more info.
+; Happy coding! ♥️
+
+; TIPS: As with any Clojure file when the REPL is connected:
+; - `alt+enter` evaluates the current top level form.
+; - `ctrl+enter` evaluates the current form.
+; Special for this file:
+; - `alt+up` and `alt+down` traverse up and down the REPL command history
+;    when the cursor is after the last contents at the prompt
+; 
+; See also the Calva Inspector: https://calva.io/inspector/
+
+This file is configured as the output destination for all REPL output.
+You can configure this with the setting:
+  "calva.outputDestinations"
+
+
+; Jacking in...
+; Connecting using "deps.edn" project type.
+; You can make Calva auto-select this.
+;   - See https://calva.io/connect-sequences/
+; 
+
+; Starting Jack-in: (cd /home/florian/repo/pink-gorilla/re-flow; clojure -Sdeps '{:deps {nrepl/nrepl {:mvn/version,"1.1.1"},cider/cider-nrepl {:mvn/version,"0.47.1"}}}' -M -m nrepl.cmdline --middleware "[cider.nrepl/cider-middleware]")
+; Using host:port localhost:34277 ...
+; Hooking up nREPL sessions ...
+; Connected session: clj
+; Evaluating code from settings: 'calva.autoEvaluateCode.onConnect.clj'
+(when-let [requires (resolve 'clojure.main/repl-requires)] (clojure.core/apply clojure.core/require @requires))
+nil
+clj꞉user꞉> 
+; Jack-in done.
+clj꞉user꞉> 
+(ns demo.test
+  (:require 
+    [missionary.core :as m]
+    [taoensso.timbre :refer [info error]]
+   )
+  
+  )
+nil
+clj꞉demo.test꞉> 
+(defn publish!
+  [push! flow]
+  (let [rf (fn [r v]
+             (info "pushing value: " v)
+             ;(push! v)
+             r)]
+    (m/reduce rf nil flow)))
+#'demo.test/publish!
+clj꞉demo.test꞉> 
+(def flow (m/seed [1 2 3 4 5]))
+#'demo.test/flow
+clj꞉demo.test꞉> 
+(def task (publish! nil flow))
+#'demo.test/task
+clj꞉demo.test꞉> 
+(def dispose! (task  #(prn ::success %)
+                      #(prn ::crash %)))
+2024-07-15T18:58:52.641Z nuc12 INFO [demo.test:13] - pushing value:  1
+2024-07-15T18:58:52.664Z nuc12 INFO [demo.test:13] - pushing value:  2
+2024-07-15T18:58:52.665Z nuc12 INFO [demo.test:13] - pushing value:  3
+2024-07-15T18:58:52.665Z nuc12 INFO [demo.test:13] - pushing value:  4
+2024-07-15T18:58:52.666Z nuc12 INFO [demo.test:13] - pushing value:  5
+:demo.test/success nil
+#'demo.test/dispose!
+clj꞉demo.test꞉> 
+task
+#function[missionary.core/reduce/fn--12855]
+clj꞉demo.test꞉> 
+(type task)
+missionary.core$reduce$fn__12855
+clj꞉demo.test꞉> 
+(class task)
+missionary.core$reduce$fn__12855
+clj꞉demo.test꞉> 
+(type task)
+missionary.core$reduce$fn__12855
+clj꞉demo.test꞉> 
+(fn? task)
+true
+clj꞉demo.test꞉> 

@@ -1,0 +1,23 @@
+{:paths ["src"
+         "resources"]
+ :deps
+ {org.pinkgorilla/webly {:mvn/version "0.7.694"}
+  org.pinkgorilla/ui-tailwind {:mvn/version "0.1.8"}
+  org.pinkgorilla/re-flow {:local/root ".." :deps/manifest :deps}}
+
+ :aliases
+ {:webly {:exec-fn webly.app.app/webly-build
+          :exec-args {:config [{}]
+                      :profile "npm-install"}}
+
+  :npm-install {:exec-args {:profile "npm-install"}}
+  :compile {:exec-args {:profile "compile2"}}
+  :release {:exec-args {:profile "release"}}
+  :release-adv {:exec-args {:profile "release-adv"}}
+  :static {:exec-args {:profile "static"}}
+  :ci {:exec-args {:profile "ci"}}
+
+  :run {:exec-fn modular.system/start!
+        :exec-args {:profile "jetty"
+                    :config [{}]
+                    :services "services.edn"}}}}

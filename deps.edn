@@ -1,0 +1,18 @@
+{:paths ["src" "resources"]
+ :deps
+ {org.clojure/clojure    {:mvn/version "1.11.3"}
+  nano-id/nano-id {:mvn/version "1.1.0"}
+  missionary/missionary {:mvn/version "b.39"} ; reactive framework.
+  ;aleph/aleph {:mvn/version "0.7.1"} ; websocket client steam bybit
+  org.pinkgorilla/timbre {:mvn/version "0.0.7"}
+  org.pinkgorilla/clj-service {:mvn/version "0.3.20"} ; used to discover clj-services that return a flow.
+  org.pinkgorilla/goldly {:mvn/version "0.7.680"} ; sci-bindings for missionary and re-flow
+
+}
+
+ :aliases
+ {:test {:extra-paths ["test"]
+         :extra-deps {io.github.cognitect-labs/test-runner {:git/url "https://github.com/cognitect-labs/test-runner.git"
+                                                            :sha "9e35c979860c75555adaff7600070c60004a0f44"}}
+         :main-opts ["-m" "cognitect.test-runner"]
+         :exec-fn cognitect.test-runner.api/test}}}

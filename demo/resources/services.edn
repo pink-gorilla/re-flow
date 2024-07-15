@@ -1,0 +1,29 @@
+{:modular (modular.system/modular-env)  ; {:profile "jetty"  :config ["demo.edn" "secrets.edn"]}
+ ;:secrets #include "secrets.edn" ;; externalised and usually "mounted" as a docker/kubernetes secret
+ :components
+ {:config {:start (modular.config/load-config! (:config #ref [:modular]))}
+
+  :exts {:start (extension/discover)}
+
+  :timbre {:start (modular.log/timbre-config!
+                   (:timbre/clj (deref (clip/ref :config))))}
+
+  ; empty users because we get user-identity via oauth2 which is not included here.
+  :permission {:start (modular.permission.core/start-permissions {})}
+
+  :clj-service {:start (clj-service.core/start-clj-services
+                        (clip/ref :permission)
+                        (clip/ref :exts))}
+  
+  :re-flow {:start (re-flow.core/start-clj-flow!
+                    {:clj-service (clip/ref :clj-service)
+                     :permission-service (clip/ref :permission)})}
+
+  :webly {:start (webly.app.app/start-webly
+                  (clip/ref :exts)
+                  (deref (clip/ref :config))
+                  (:profile #ref [:modular]))
+          :stop (webly.app.app/stop-webly this)}
+
+;  
+  }}

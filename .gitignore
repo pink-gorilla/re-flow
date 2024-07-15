@@ -1,0 +1,11 @@
+.lsp
+.cpcache
+.clj-kondo
+.shadow-cljs
+node_modules
+target
+package.json
+package-lock.json
+karma.conf.js
+shadow-cljs.edn
+.webly
